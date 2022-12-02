@@ -1,0 +1,218 @@
+--view creation  UPDATABLE VIEW
+create view emp_view as  select deptno,max(sal)"max sal",min(sal) "Min sal" from emp group by deptno;
+create view em_view as  select deptno,sal  from emp ;
+insert into em_view values(10,2000);
+create view empp as select empno,ename,sal,deptno from emp;
+select * from emp_view;
+select * from empp;
+drop view emp_view;
+select * from emp;
+
+insert into empp values(1234,'abcd',1300,20);
+--NON-UPDATABLE VIEW
+desc dept1
+create view emp_dept as select e.empno,e.ename,e.sal,d.deptno from emp e,dept1 d where e.deptno=d.deptno;
+select *from dept;
+select e.empno,e.ename,e.sal,d.deptno,d.loc from emp e,dept d where e.deptno=d.deptno;
+select * from emp_dept;
+drop view emp_dept;
+
+insert into emp_dept values(2345,'money',2300,20);
+
+select * from emp where deptno=10;
+
+create view v1 as select * from emp where deptno=10;
+
+select * from v1;
+create sequence dept_seq
+    INCREMENT BY 10
+    START WITH 20
+    MINVALUE 10
+    MAXVALUE 100
+    NOCYCLE ;
+select dept_seq.nextval from dual;
+create sequence roll_num
+    INCREMENT BY 1
+    START WITH 501
+    MINVALUE 500
+    NOCACHE ;
+
+SELECT roll_num.nextval from dual;
+const n=19K61A0;
+set serveroutput on;
+declare
+n_sales number:=20000;
+n number(6):='&N';
+begin 
+if n_sales>n then
+    dbms_output.put_line('Greater ');
+elsif n_sales<n then
+    dbms_output.put_line('lesser');
+else
+dbms_output.put_line('equals');
+end if;
+end;
+/
+set serveroutput on;
+declare
+ a number:='&a';
+begin 
+<<first>>
+ while a < 20  loop  
+    a:=a+1;
+    if a =15 then 
+    a:=a+1;
+    goto first;
+    end if;
+    end loop;
+    end;
+    /
+
+set serveroutput on;
+declare
+num_small number :=8;
+num_larg number:=5;
+num_temp number;
+begin
+    if num_small > num_larg then 
+    num_temp := num_small;
+    num_small :=num_larg;
+    num_larg :=num_temp;
+    dbms_output.put_line('smallest number is'||num_small);
+    dbms_output.put_line('Greatest number is'||num_larg);
+    else
+    dbms_output.put_line('smallest number is'||num_small);
+    dbms_output.put_line('Greatest number is'||num_larg);
+end if;
+end;
+/
+
+set serveroutput on;
+declare
+num number:='&num';
+begin
+    if num mod 2 =0 then
+        dbms_output.put_line('num '||num||'is even');
+    else
+        dbms_output.put_line('num '||num||'is odd');
+    end if;
+end;
+set serveroutput on;
+declare 
+dt1 DATE := to_date('&new_dt','dd-mm-yy');
+get_day varchar2(15):=rtrim(to_char(dt1,'DAY'));
+begin
+
+if get_day in ('SATURDAY','SUNDAY') then
+    dbms_output.put_line('The day of the given date is '
+    ||get_day||' and its falls on weekend');
+else
+    dbms_output.put_line('The day of the given date is '
+    ||get_day||' and its dont falls on weekend');
+end if;
+end;
+/
+
+
+set serveroutput on;
+declare
+tot_emp number;
+begin
+select count(*) into tot_emp from emp e join 
+dept d on e.deptno=d.deptno where e.deptno=20;
+if tot_emp >=40 then 
+dbms_output.put_line('There are no vaccancies in
+department 40');
+else
+dbms_output.put_line('There are some vaccancies in
+department 40');
+end if;
+end;
+/
+
+set serveroutput on;
+declare
+num number(5):='&NUMBER';
+begin
+if num>0 then dbms_output.put_line('positive');
+elsif num>0 then dbms_output.put_line('negative');
+else dbms_output.put_line('Equal to zero');
+end if;
+end;
+
+-- error
+set serveroutput on;
+declare
+num char(1) :='&variable';
+begin
+if num > 'a' and num < 'z'  then
+dbms_output.put_line(num||  'is a letter');
+else dbms_output.put_line(num ||  ' is a number ');
+end if;
+end;
+
+set serveroutput on;
+begin
+for i in 1..4
+loop
+while i mod 2 = 0 loop
+i : =i+1;
+dbms_output.put_line('i value '||i);
+end loop;
+dbms_output.put_line('i value outside loop2 '||i);
+end loop;
+end;
+
+
+--n numbers
+set serveroutput on;
+declare
+n number(2) :='&Number';
+begin
+for i in 1..n
+loop
+dbms_output.put_line(i);
+
+end loop;
+end;
+
+
+set serveroutput on;
+declare
+n number(2) :='&NUmber';
+x number:=0;
+begin
+for i in 1..n loop
+dbms_output.put_line(x);
+x:=x+3;
+
+end loop;
+end;
+
+
+set serveroutput on;
+begin
+<<loopi>>
+for i in 1..4 loop
+<<loopj>>
+for j in 1..4 loop
+dbms_output.put_line('i is'||i||' j is '||j);
+exit when j>0;
+end loop loopj;
+
+end loop loopi;
+end;
+
+
+
+
+
+set serveroutput on;
+begin
+for i in 1..10 loop
+if mod(i,2)=0 then continue
+
+dbms_output.put_line('The odd numbers are '||i);
+end if;
+end loop;
+end;
